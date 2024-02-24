@@ -36,8 +36,8 @@ public class GlobeMovement : MonoBehaviour
 
         float rotationModifier = globeMoveSpeed * Time.deltaTime;
 
-        transform.RotateAround(Vector3.up, -globeMovement.x * rotationModifier);
-        transform.RotateAround(Vector3.right, globeMovement.y * rotationModifier);
+        transform.Rotate(globeMovement.y * rotationModifier, -globeMovement.x * rotationModifier, 0, Space.World);
+
 
     }
 }
