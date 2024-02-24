@@ -1,6 +1,5 @@
-﻿Lat,Long,Msr,Year,Density Class
-35.617,-127.883,0.013,1972,Medium
-38.983,-133.017,0.007,1972,Medium
-39.083,-145,0.02,1972,Medium
-34.983,-133,0.073,1972,Medium
-34.983,-137.05,0,1972,Very Low
+﻿Latitude,Longitude,Measurement,Year,DensityClass
+0, 0, 0, 0, yes
+90, 0, 0, 0, yes
+21.3099, -157.8581, 0, 0, yes
+51.5072, -0.1276, 0, 0, a
