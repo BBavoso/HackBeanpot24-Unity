@@ -13,13 +13,18 @@ public class MicroplasticsDataSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        var reader = new StreamReader("./assets/datasets/test_data.csv");
+        var reader = new StreamReader("./assets/datasets/Marine_Microplastics.csv");
         var csvReader = new CsvReader(reader, CultureInfo.InvariantCulture);
         var marineMicroplatics = csvReader.GetRecords<MicroplaticData>();
 
         foreach (MicroplaticData microplaticData in marineMicroplatics)
         {
             (Vector3 postion, float measuremeant) = microplaticData.GetPoint();
+
+            if (measuremeant == 0)
+            {
+                continue;
+            }
 
             var point = Instantiate(dataPointPrefab, postion, Quaternion.identity);
         }
