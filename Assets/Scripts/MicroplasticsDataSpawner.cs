@@ -6,27 +6,38 @@ using System.IO;
 using System.Globalization;
 using System.Linq;
 using System;
+using UnityEditor;
 
 public class MicroplasticsDataSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject dataPointPrefab;
+
+    private List<MicroplasticData> microplastics;
+
+
     // Start is called before the first frame update
     void Start()
     {
-        var reader = new StreamReader("./assets/datasets/Marine_Microplastics.csv");
+        var reader = new StreamReader("./assets/datasets/Marine_Microplastics_Clean.csv");
         var csvReader = new CsvReader(reader, CultureInfo.InvariantCulture);
-        var marineMicroplatics = csvReader.GetRecords<MicroplaticData>();
+        var marineMicroplatics = csvReader.GetRecords<MicroplasticData>();
 
-        foreach (MicroplaticData microplaticData in marineMicroplatics)
+        microplastics = marineMicroplatics.ToList();
+
+        RandomizeListInPlace(microplastics);
+
+        StartCoroutine(spawnMicroplastics(microplastics));
+    }
+
+    void RandomizeListInPlace<T>(List<T> list)
+    {
+        System.Random rng = new();
+        int n = list.Count();
+        while (n > 1)
         {
-            (Vector3 postion, float measuremeant) = microplaticData.GetPoint();
-
-            if (measuremeant == 0)
-            {
-                continue;
-            }
-
-            var point = Instantiate(dataPointPrefab, postion, Quaternion.identity);
+            n--;
+            int k = rng.Next(n + 1);
+            (list[n], list[k]) = (list[k], list[n]);
         }
     }
 
@@ -35,17 +46,40 @@ public class MicroplasticsDataSpawner : MonoBehaviour
     {
 
     }
+
+    IEnumerator spawnMicroplastics(List<MicroplasticData> microplastics)
+    {
+        Dictionary<int, float> dataSizeMapping = new();
+        dataSizeMapping.Add(0, .01f);
+        dataSizeMapping.Add(1, .05f);
+        dataSizeMapping.Add(2, .075f);
+        dataSizeMapping.Add(3, .1f);
+        dataSizeMapping.Add(4, .15f);
+        foreach (var microplastic in microplastics)
+        {
+            (Vector3 pos, float masurement) = microplastic.GetPoint();
+            var pointObject = Instantiate(dataPointPrefab, pos, Quaternion.identity);
+
+            var scale = dataSizeMapping[microplastic.DensityClass];
+
+            pointObject.transform.localScale = new Vector3(scale, scale, scale);
+
+            yield return new WaitForSeconds(.01f);
+        }
+    }
+
+
 }
 
 
-public class MicroplaticData
+public class MicroplasticData
 {
     static float radius = 4.2f / 2;
     public float Longitude { get; set; }
     public float Latitude { get; set; }
     public float Measurement { get; set; }
     public int Year { get; set; }
-    public string DensityClass { get; set; }
+    public int DensityClass { get; set; }
 
 
     public (Vector3, float) GetPoint()
