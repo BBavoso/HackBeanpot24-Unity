@@ -19,20 +19,57 @@ public class MicroplasticsDataSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Load the CSV file from Resources
         var file = Resources.Load<TextAsset>("Marine_Microplastics_Cleaned");
-        byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(file.text);
-        var memStream = new MemoryStream(byteArray);
-        var reader = new StreamReader(memStream);
-        
-        var csvReader = new CsvReader(reader, CultureInfo.InvariantCulture);
-        
-        
-        var marineMicroplatics = csvReader.GetRecords<MicroplasticData>();
-        microplastics = marineMicroplatics.ToList();
 
-        RandomizeListInPlace(microplastics);
+        if (file != null)
+        {
+            // Split the CSV content into lines
+            string[] lines = file.text.Split('\n');
 
-        StartCoroutine(spawnMicroplastics(microplastics));    
+            // Create a list to store MicroplasticData objects
+            List<MicroplasticData> microplastics = new List<MicroplasticData>();
+
+            // Iterate through each line (skipping the header)
+            for (int i = 1; i < lines.Length; i++)
+            {
+                string line = lines[i].Trim();
+
+                // Skip empty lines
+                if (string.IsNullOrEmpty(line))
+                    continue;
+
+                // Split the line into individual CSV fields
+                string[] fields = line.Split(',');
+
+                // Ensure the line has the expected number of fields
+                if (fields.Length != 5)
+                {
+                    Debug.LogWarning("Skipping invalid line: " + line);
+                    continue;
+                }
+
+                // Parse fields and create MicroplasticData object
+                MicroplasticData data = new MicroplasticData
+                {
+                    latitude = float.Parse(fields[0]),
+                    longitude = float.Parse(fields[1]),
+                    measurement = float.Parse(fields[2]),
+                    year = int.Parse(fields[3]),
+                    densityClass = int.Parse(fields[4])
+                };
+
+                // Add MicroplasticData object to the list
+                microplastics.Add(data);
+            }
+            RandomizeListInPlace(microplastics);
+
+            StartCoroutine(spawnMicroplastics(microplastics));  
+        }
+        else
+        {
+            Debug.LogError("CSV file not found or failed to load.");
+        }
     }
 
     void RandomizeListInPlace<T>(List<T> list)
@@ -84,6 +121,10 @@ public class MicroplasticData
     public float measurement { get; set; }
     public int year { get; set; }
     public int densityClass { get; set; }
+    
+    public MicroplasticData() {
+        
+    }
 
     // Constructor
     public MicroplasticData(float longitude, float latitude, float measurement, int year, int densityClass)
