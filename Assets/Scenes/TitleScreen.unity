@@ -527,14 +527,14 @@ RectTransform:
   m_GameObject: {fileID: 1714113383}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.35, y: 2.35, z: 2.35}
+  m_LocalScale: {x: 3.9, y: 3.9000003, z: 3.9000003}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 844915577}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 63.1, y: 484.2}
+  m_AnchoredPosition: {x: -473.4, y: 470.2}
   m_SizeDelta: {x: 200.26001, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1714113385
@@ -557,7 +557,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Game time
+  m_text: Ocean Microplastic Mania
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 38e04bc429cd44a238d251d07a36958e, type: 2}
   m_sharedMaterial: {fileID: -2458676038654967754, guid: 38e04bc429cd44a238d251d07a36958e, type: 2}
@@ -664,7 +664,7 @@ Transform:
   m_GameObject: {fileID: 2080217642}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -960.5, y: -659.9, z: 0}
+  m_LocalPosition: {x: -960.03, y: -659.9, z: 0}
   m_LocalScale: {x: 39.5, y: 39.5, z: 39.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -775,6 +775,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 844915577}
     m_Modifications:
+    - target: {fileID: 1279162612210981852, guid: 0a6d8a619d9b149738cf9ebd2dac09b7, type: 3}
+      propertyPath: m_text
+      value: Start
+      objectReference: {fileID: 0}
+    - target: {fileID: 1279162612210981852, guid: 0a6d8a619d9b149738cf9ebd2dac09b7, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 959ea987caeea4b7cb9547ca94484d1e, type: 2}
+    - target: {fileID: 1279162612210981852, guid: 0a6d8a619d9b149738cf9ebd2dac09b7, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -1750843836906364639, guid: 959ea987caeea4b7cb9547ca94484d1e, type: 2}
+    - target: {fileID: 1279162612210981852, guid: 0a6d8a619d9b149738cf9ebd2dac09b7, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1967475453916748414, guid: 0a6d8a619d9b149738cf9ebd2dac09b7, type: 3}
+      propertyPath: m_Type
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2985540463245417189, guid: 0a6d8a619d9b149738cf9ebd2dac09b7, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -808,6 +828,18 @@ PrefabInstance:
       value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 2985540463245417189, guid: 0a6d8a619d9b149738cf9ebd2dac09b7, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 4.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2985540463245417189, guid: 0a6d8a619d9b149738cf9ebd2dac09b7, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 4.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2985540463245417189, guid: 0a6d8a619d9b149738cf9ebd2dac09b7, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 4.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2985540463245417189, guid: 0a6d8a619d9b149738cf9ebd2dac09b7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -837,11 +869,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2985540463245417189, guid: 0a6d8a619d9b149738cf9ebd2dac09b7, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.41
+      value: 487.96
       objectReference: {fileID: 0}
     - target: {fileID: 2985540463245417189, guid: 0a6d8a619d9b149738cf9ebd2dac09b7, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 146.2
+      value: 277.4
       objectReference: {fileID: 0}
     - target: {fileID: 2985540463245417189, guid: 0a6d8a619d9b149738cf9ebd2dac09b7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -854,6 +886,10 @@ PrefabInstance:
     - target: {fileID: 2985540463245417189, guid: 0a6d8a619d9b149738cf9ebd2dac09b7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7492443424454839048, guid: 0a6d8a619d9b149738cf9ebd2dac09b7, type: 3}
+      propertyPath: m_Transition
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7492443424454839048, guid: 0a6d8a619d9b149738cf9ebd2dac09b7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
