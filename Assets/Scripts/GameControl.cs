@@ -13,6 +13,8 @@ public class GameControl : MonoBehaviour
     public float plasticsRemoved = 0f;
     public TotalSpawnedBar totalSpawnedBar;
     public FailRatioBar failRatioBar;
+    public static float score;
+    float int_score = 0f;
        
     void Start() 
     {
@@ -27,6 +29,7 @@ public class GameControl : MonoBehaviour
         plasticsRemoved = totalSpawned - plasticsOnScreen;
         plasticsRatio = plasticsOnScreen / totalPlastics;
         updateUI(totalSpawned, plasticsRatio);
+        int_score = plasticsRemoved /totalPlastics * 100;
         if (plasticsRatio > threshold) {
             Debug.Log("LOSER LOSER LOSER");
             gameOver();
@@ -38,12 +41,13 @@ public class GameControl : MonoBehaviour
 
     void gameOver() {
         Debug.Log("GAME OVER");
-        Time.timeScale = 0f;
+        GameControl.score = int_score;
         SceneManager.LoadScene("LoseScreen");
     }
 
     void youWin() {
         Debug.Log("YOU WIN YOU WIN WINNER WINNER WINNER");
+        GameControl.score = int_score;
         SceneManager.LoadScene("WinScreen");
     }
 
