@@ -11,10 +11,12 @@ public class GameControl : MonoBehaviour
     public float threshold = 0.15f;
     public float plasticsRemoved = 0f;
     public TotalSpawnedBar totalSpawnedBar;
+    public FailRatioBar failRatioBar;
 
     void Start() 
     {
         totalSpawnedBar.SetSpawnedSlider(0);
+        failRatioBar.SetFailSlider(0);
     }
 
     // Update is called once per frame
@@ -23,7 +25,7 @@ public class GameControl : MonoBehaviour
         plasticsOnScreen = GameObject.FindGameObjectsWithTag("trash").Length;
         plasticsRemoved = totalSpawned - plasticsOnScreen;
         plasticsRatio = plasticsOnScreen / totalPlastics;
-        updateUI(totalSpawned);
+        updateUI(totalSpawned, plasticsRatio);
         if (plasticsRatio > threshold) {
             Debug.Log("LOSER LOSER LOSER");
             gameOver();
@@ -35,15 +37,17 @@ public class GameControl : MonoBehaviour
 
     void gameOver() {
         Debug.Log("GAME OVER");
+        Time.timeScale = 0f;
     }
 
     void youWin() {
         Debug.Log("YOU WIN YOU WIN WINNER WINNER WINNER");
     }
 
-    void updateUI(float spawned)
+    void updateUI(float spawned, float ratio)
     {
         totalSpawnedBar.SetSpawnedSlider(spawned);
+        failRatioBar.SetFailSlider(ratio);
     }
 }
 
