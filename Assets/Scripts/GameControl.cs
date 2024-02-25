@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameControl : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class GameControl : MonoBehaviour
     public float plasticsRemoved = 0f;
     public TotalSpawnedBar totalSpawnedBar;
     public FailRatioBar failRatioBar;
-
+       
     void Start() 
     {
         totalSpawnedBar.SetSpawnedSlider(0);
@@ -38,10 +39,12 @@ public class GameControl : MonoBehaviour
     void gameOver() {
         Debug.Log("GAME OVER");
         Time.timeScale = 0f;
+        SceneManager.LoadScene("LoseScreen");
     }
 
     void youWin() {
         Debug.Log("YOU WIN YOU WIN WINNER WINNER WINNER");
+        SceneManager.LoadScene("WinScreen");
     }
 
     void updateUI(float spawned, float ratio)
