@@ -19,7 +19,7 @@ public class MicroplasticsDataSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        var reader = new StreamReader("./assets/datasets/Marine_Microplastics_Cleaned.csv");
+        var reader = new StreamReader("/HackBeanpot24-Unity/assets/datasets/Marine_Microplastics_Cleaned.csv");
         var csvReader = new CsvReader(reader, CultureInfo.InvariantCulture);
         var marineMicroplatics = csvReader.GetRecords<MicroplasticData>();
 
