@@ -7,8 +7,6 @@ using System.Globalization;
 using System.Linq;
 using System;
 using UnityEditor;
-using System.Net;
-using UnityEngine.Networking;
 
 public class MicroplasticsDataSpawner : MonoBehaviour
 {
@@ -21,42 +19,21 @@ public class MicroplasticsDataSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        DownloadCsv("https://drive.google.com/uc?export=download&id=10ZjuCRO0vmQIrTmLisBuzOxz6zJ1YDN_");
+        var file = Resources.Load<TextAsset>("Marine_Microplastics_Cleaned");
+        byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(file.text);
+        var memStream = new MemoryStream(byteArray);
+        var reader = new StreamReader(memStream);
+        
+        var csvReader = new CsvReader(reader, CultureInfo.InvariantCulture);
+        
+        
+        var marineMicroplatics = csvReader.GetRecords<MicroplasticData>();
+        microplastics = marineMicroplatics.ToList();
+
+        RandomizeListInPlace(microplastics);
+
+        StartCoroutine(spawnMicroplastics(microplastics));    
     }
-
-    public void DownloadCsv(string url)
-    {
-        StartCoroutine(DownloadCsvCoroutine(url));
-    }
-
-    private IEnumerator DownloadCsvCoroutine(string url)
-    {
-        using (UnityWebRequest www = UnityWebRequest.Get(url))
-        {
-            yield return www.SendWebRequest();
-
-            if (www.result == UnityWebRequest.Result.Success)
-            {
-                Debug.Log("CSV downloaded successfully");
-                byte[] bytes = www.downloadHandler.data;
-                MemoryStream stream = new MemoryStream(bytes);
-                StreamReader reader = new StreamReader(stream);
-
-                var csvReader = new CsvReader(reader, CultureInfo.InvariantCulture);
-                var marineMicroplatics = csvReader.GetRecords<MicroplasticData>();
-                microplastics = marineMicroplatics.ToList();
-
-                RandomizeListInPlace(microplastics);
-
-                StartCoroutine(spawnMicroplastics(microplastics));    
-            }
-            else
-            {
-                Debug.LogError("Failed to download CSV: " + www.error);
-            }
-        }
-    }
-
 
     void RandomizeListInPlace<T>(List<T> list)
     {
@@ -90,32 +67,39 @@ public class MicroplasticsDataSpawner : MonoBehaviour
             var pointObject = Instantiate(dataPointPrefab, pos, Quaternion.identity);
             gameControl.totalSpawned += 1;
 
-            var scale = dataSizeMapping[microplastic.DensityClass];
+            var scale = dataSizeMapping[microplastic.densityClass];
 
             pointObject.transform.localScale = new Vector3(scale, scale, scale);
 
             yield return new WaitForSeconds(.01f);
         }
     }
-
-
 }
-
 
 public class MicroplasticData
 {
     static float radius = 4.2f / 2;
-    public float Longitude { get; set; }
-    public float Latitude { get; set; }
-    public float Measurement { get; set; }
-    public int Year { get; set; }
-    public int DensityClass { get; set; }
+    public float longitude { get; set; }
+    public float latitude { get; set; }
+    public float measurement { get; set; }
+    public int year { get; set; }
+    public int densityClass { get; set; }
 
+    // Constructor
+    public MicroplasticData(float longitude, float latitude, float measurement, int year, int densityClass)
+    {
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.measurement = measurement;
+        this.year = year;
+        this.densityClass = densityClass;
+    }
 
+    // GetPoint method
     public (Vector3, float) GetPoint()
     {
-        float latRadians = Latitude * Mathf.PI / 180;
-        float lngRadians = Longitude * Mathf.PI / 180 + Mathf.PI / 2;
+        float latRadians = latitude * Mathf.PI / 180;
+        float lngRadians = longitude * Mathf.PI / 180 + Mathf.PI / 2;
 
         float xPos = radius * Mathf.Cos(latRadians) * Mathf.Sin(lngRadians);
         float zPos = -radius * Mathf.Cos(latRadians) * Mathf.Cos(lngRadians);
@@ -123,7 +107,6 @@ public class MicroplasticData
 
         var position = new Vector3(xPos, yPos, zPos);
 
-        return (position, Measurement);
+        return (position, measurement);
     }
-
 }
