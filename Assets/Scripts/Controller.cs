@@ -9,8 +9,6 @@ public class Controller : MonoBehaviour
     public GameControl  gameControl;
     void Awake()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
         rb = GetComponent<Rigidbody>();
     }
 

@@ -7,6 +7,8 @@ using System.Globalization;
 using System.Linq;
 using System;
 using UnityEditor;
+using System.Net;
+using UnityEngine.Networking;
 
 public class MicroplasticsDataSpawner : MonoBehaviour
 {
@@ -19,16 +21,42 @@ public class MicroplasticsDataSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        var reader = new StreamReader("/HackBeanpot24-Unity/assets/datasets/Marine_Microplastics_Cleaned.csv");
-        var csvReader = new CsvReader(reader, CultureInfo.InvariantCulture);
-        var marineMicroplatics = csvReader.GetRecords<MicroplasticData>();
-
-        microplastics = marineMicroplatics.ToList();
-
-        RandomizeListInPlace(microplastics);
-
-        StartCoroutine(spawnMicroplastics(microplastics));    
+        DownloadCsv("https://drive.google.com/uc?export=download&id=10ZjuCRO0vmQIrTmLisBuzOxz6zJ1YDN_");
     }
+
+    public void DownloadCsv(string url)
+    {
+        StartCoroutine(DownloadCsvCoroutine(url));
+    }
+
+    private IEnumerator DownloadCsvCoroutine(string url)
+    {
+        using (UnityWebRequest www = UnityWebRequest.Get(url))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result == UnityWebRequest.Result.Success)
+            {
+                Debug.Log("CSV downloaded successfully");
+                byte[] bytes = www.downloadHandler.data;
+                MemoryStream stream = new MemoryStream(bytes);
+                StreamReader reader = new StreamReader(stream);
+
+                var csvReader = new CsvReader(reader, CultureInfo.InvariantCulture);
+                var marineMicroplatics = csvReader.GetRecords<MicroplasticData>();
+                microplastics = marineMicroplatics.ToList();
+
+                RandomizeListInPlace(microplastics);
+
+                StartCoroutine(spawnMicroplastics(microplastics));    
+            }
+            else
+            {
+                Debug.LogError("Failed to download CSV: " + www.error);
+            }
+        }
+    }
+
 
     void RandomizeListInPlace<T>(List<T> list)
     {

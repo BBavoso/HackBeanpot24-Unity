@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.87353545, g: 0.6440428, b: 0.6440428, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -802,7 +802,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 0}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 0.15
+  m_MaxValue: 0.3
   m_WholeNumbers: 0
   m_Value: 0.1
   m_OnValueChanged:
@@ -1460,7 +1460,7 @@ MonoBehaviour:
   totalSpawned: 0
   plasticsOnScreen: 0
   plasticsRatio: 0
-  threshold: 0.15
+  threshold: 0.3
   plasticsRemoved: 0
   totalSpawnedBar: {fileID: 734835014}
   failRatioBar: {fileID: 1031964432}
