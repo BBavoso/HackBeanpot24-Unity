@@ -7,8 +7,6 @@ public class StartScreen : MonoBehaviour
 {
     public string firstLevel;
 
-void Start(){}
-void update(){}
     // Start is called before the first frame update
     public void StartGame()
     {
