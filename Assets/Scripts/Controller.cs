@@ -1,4 +1,3 @@
-using UnityEditor.Build.Content;
 using UnityEngine;
 
 [RequireComponent(typeof(Attractee))]
@@ -10,8 +9,6 @@ public class Controller : MonoBehaviour
     public GameControl  gameControl;
     void Awake()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
         rb = GetComponent<Rigidbody>();
     }
 
